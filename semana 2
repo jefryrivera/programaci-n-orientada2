@@ -1,0 +1,138 @@
+# ============================================
+#     Clase base: Animal
+# ============================================
+
+# --------------------------------------------
+# 1. ABSTRACCIÓN (Aplicada en la clase Animal)
+# --------------------------------------------
+# La abstracción se usa para representar únicamente lo esencial
+# de cualquier animal: nombre, especie, y edad. Esta clase sirve
+# como un modelo general, enfocándose en las características comunes
+# que serán heredadas por clases más específicas (Mamífero, Ave).
+# --------------------------------------------
+
+class Animal:
+    def __init__(self, nombre, especie, edad):
+        # =====================================================
+        # 2. ENCAPSULAMIENTO (Protección de los datos)
+        # -----------------------------------------------------
+        # Los atributos están protegidos (indicado con un guion bajo)
+        # para prevenir modificaciones directas. El acceso y la
+        # modificación controlada se realizan a través de métodos
+        # 'getters' y 'setters'.
+        # =====================================================
+        self._nombre = nombre
+        self._especie = especie
+        self._edad = edad
+
+    # -------- MÉTODO DE ABSTRACCIÓN --------
+    # Define la acción común que todo Animal puede hacer.
+    def hacer_sonido(self):
+        # Este método base es abstracto en su comportamiento,
+        # obligando a las clases hijas a definir su sonido real.
+        return "El animal hace un sonido desconocido."
+
+    def mostrar_info(self):
+        return f"{self._nombre} es un {self._especie} de {self._edad} años."
+
+    # -------- MÉTODOS DE ENCAPSULAMIENTO (Getters y Setters) --------
+    def get_nombre(self):
+        return self._nombre
+
+    def set_nombre(self, nuevo_nombre):
+        # Validación simple para el nombre
+        if len(nuevo_nombre) > 2:
+            self._nombre = nuevo_nombre
+
+    def get_edad(self):
+        return self._edad
+
+    def set_edad(self, nueva_edad):
+        # Validación: la edad debe ser positiva
+        if nueva_edad >= 0:
+            self._edad = nueva_edad
+
+
+# ============================================
+#     HERENCIA: Mamifero y Ave
+# ============================================
+
+# ---------------------------------------------------------
+# 3. HERENCIA (Mamifero y Ave heredan de Animal)
+# ---------------------------------------------------------
+# Permite que las subclases hereden atributos (nombre, especie, edad)
+# y métodos de la superclase Animal. Esto promueve la reutilización.
+# Las subclases agregan atributos propios: tipo_pelaje y color_plumas.
+# ---------------------------------------------------------
+
+class Mamifero(Animal):
+    def __init__(self, nombre, especie, edad, tipo_pelaje):
+        # Llama al constructor de la clase padre Animal
+        super().__init__(nombre, especie, edad)
+        self.tipo_pelaje = tipo_pelaje # Atributo propio
+
+    # ---------------------------------------------
+    # 4. POLIMORFISMO: método hacer_sonido() reescrito
+    # ---------------------------------------------
+    # Se redefine el método hacer_sonido() (heredado de Animal)
+    # para que devuelva un comportamiento específico de Mamífero.
+    # ---------------------------------------------
+    def hacer_sonido(self):
+        if self._especie == "Perro":
+            return "¡Guau! ¡Guau!"
+        elif self._especie == "Gato":
+            return "¡Miau!"
+        return f"El {self._especie} ruge."
+
+    def mostrar_info(self):
+        # Polimorfismo: Muestra info base y añade el pelaje.
+        info_base = super().mostrar_info()
+        return f"{info_base} - Pelaje: {self.tipo_pelaje}"
+
+
+class Ave(Animal):
+    def __init__(self, nombre, especie, edad, color_plumas):
+        super().__init__(nombre, especie, edad)
+        self.color_plumas = color_plumas # Atributo propio
+
+    # Polimorfismo: reescritura de hacer_sonido()
+    def hacer_sonido(self):
+        if self._especie == "Loro":
+            return "¡Hola!"
+        return "¡Pío! ¡Pío!"
+
+    def mostrar_info(self):
+        # Polimorfismo: Muestra info base y añade el color de plumas.
+        info_base = super().mostrar_info()
+        return f"{info_base} - Plumas: {self.color_plumas}"
+
+
+# ============================================
+#     PROGRAMA PRINCIPAL (uso de las clases)
+# ============================================
+
+a1 = Animal("Desconocido", "Salvaje", 5)
+m1 = Mamifero("Rocky", "Perro", 3, "Corto")
+av1 = Ave("Piolín", "Canario", 1, "Amarillo")
+
+print("--- Información de Animales ---")
+print(a1.mostrar_info())
+print(m1.mostrar_info())
+print(av1.mostrar_info())
+
+print("\n--- Demostración de Polimorfismo (hacer_sonido) ---")
+print(f"El animal 1: {a1.hacer_sonido()}") # Método base
+print(f"{m1.get_nombre()}: {m1.hacer_sonido()}") # Método reescrito (Mamifero)
+print(f"{av1.get_nombre()}: {av1.hacer_sonido()}") # Método reescrito (Ave)
+
+print("\n--- Demostración de Encapsulamiento ---")
+# Modificación controlada del nombre de Rocky
+nombre_anterior = m1.get_nombre()
+m1.set_nombre("Roco")
+print(f"Nombre de '{nombre_anterior}' cambiado a '{m1.get_nombre()}'")
+
+# Intento de edad inválida (el setter lo previene)
+m1.set_edad(-5)
+print(f"Edad después de intento de cambio inválido: {m1.get_edad()} (no cambió)")
+m1.set_edad(4)
+print(f"Edad cambiada correctamente a: {m1.get_edad()}")
