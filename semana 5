@@ -1,0 +1,90 @@
+# ------------------------------------------------------------------------------------
+# Archivo: geometria_rectangulo.py
+# Descripción: Este programa calcula el área y el perímetro de un rectángulo,
+#              solicitando al usuario la longitud de la base y la altura.
+#              También verifica si el rectángulo es un cuadrado.
+# ------------------------------------------------------------------------------------
+
+# Tipo de Datos: float (para base y altura), string (para mensaje final),
+#                boolean (para es_cuadrado), integer (para contador, aunque no esencial, lo incluimos)
+
+def calcular_area_y_perimetro(base: float, altura: float) -> tuple[float, float, bool]:
+    """
+    Función que calcula el área y el perímetro de un rectángulo.
+
+    Args:
+        base (float): La longitud de la base del rectángulo.
+        altura (float): La longitud de la altura del rectángulo.
+
+    Returns:
+        tuple[float, float, bool]: Una tupla que contiene (area, perimetro, es_cuadrado).
+    """
+
+    # 1. Identificador descriptivo y convención snake_case: area_rectangulo
+    area_rectangulo = base * altura
+
+    # 2. Identificador descriptivo y convención snake_case: perimetro_rectangulo
+    perimetro_rectangulo = 2 * (base + altura)
+
+    # 3. Uso de tipo de dato boolean: Verifica si el rectángulo es un cuadrado
+    es_cuadrado = base == altura
+
+    # Devuelve los resultados
+    return area_rectangulo, perimetro_rectangulo, es_cuadrado
+
+def ejecutar_programa_calculo():
+    """
+    Función principal que gestiona la interacción con el usuario y muestra los resultados.
+    """
+    print("--- Calculadora de Área y Perímetro de Rectángulo ---")
+
+    # Inicialización de un contador (Uso de tipo de dato integer)
+    intentos_lectura = 0
+    max_intentos = 3
+    datos_validos = False
+
+    # Bucle para asegurar que la entrada del usuario es válida
+    while not datos_validos and intentos_lectura < max_intentos:
+        try:
+            # Solicitud de entrada (Uso de tipo de dato float)
+            # Uso de identificadores descriptivos: longitud_base, longitud_altura
+            longitud_base = float(input("Por favor, ingrese la longitud de la BASE del rectángulo: "))
+            longitud_altura = float(input("Por favor, ingrese la longitud de la ALTURA del rectángulo: "))
+
+            # Comentario relevante: Verificación de valores positivos para geometría
+            if longitud_base > 0 and longitud_altura > 0:
+                datos_validos = True
+            else:
+                print("Error: La base y la altura deben ser valores positivos. Inténtelo de nuevo.")
+                intentos_lectura += 1
+
+        except ValueError:
+            # Comentario relevante: Manejo de error si el usuario no ingresa un número
+            print("Error: Entrada inválida. Asegúrese de ingresar solo números.")
+            intentos_lectura += 1
+
+    if datos_validos:
+        # Llamada a la función de cálculo con los datos ingresados
+        area, perimetro, es_cuadrado = calcular_area_y_perimetro(longitud_base, longitud_altura)
+
+        print("\n--- Resultados ---")
+        # Uso de tipo de dato string para el resultado final
+        mensaje_resultado = f"El rectángulo con base {longitud_base} y altura {longitud_altura} tiene:"
+
+        print(mensaje_resultado)
+        print(f"  * Área: {area:.2f} unidades cuadradas")
+        print(f"  * Perímetro: {perimetro:.2f} unidades lineales")
+
+        # Comentario relevante: Uso de la variable booleana para mostrar un mensaje condicional
+        if es_cuadrado:
+            print("¡Nota: Las dimensiones son iguales, por lo que este rectángulo es un CUADRADO!")
+        else:
+            print("Nota: La base y la altura son diferentes.")
+
+    else:
+        # Mensaje de finalización si se exceden los intentos
+        print(f"\nSe ha excedido el número máximo de {max_intentos} intentos. El programa ha finalizado.")
+
+# Punto de entrada principal del programa
+if __name__ == "__main__":
+    ejecutar_programa_calculo()
