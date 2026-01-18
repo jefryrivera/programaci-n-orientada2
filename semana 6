@@ -1,0 +1,53 @@
+# --- PROGRAMA DE GESTIÓN DE EMPLEADOS ---
+# Conceptos: Herencia, Encapsulamiento y Polimorfismo
+
+# 1. CLASE BASE (Demuestra Encapsulamiento)
+class Empleado:
+    def __init__(self, nombre, salario_base):
+        self.nombre = nombre
+        # Atributo privado (__salario) para demostrar ENCAPSULAMIENTO
+        self.__salario = salario_base 
+
+    # Método para obtener el salario (Getter)
+    def obtener_salario(self):
+        return self.__salario
+
+    # Método que será sobrescrito (Para demostrar POLIMORFISMO)
+    def calcular_pago(self):
+        return self.__salario
+
+    def mostrar_informacion(self):
+        print(f"Empleado: {self.nombre} | Salario Base: ${self.__salario}")
+
+
+# 2. CLASE DERIVADA (Demuestra HERENCIA)
+class EmpleadoPorComision(Empleado):
+    def __init__(self, nombre, salario_base, ventas_realizadas):
+        # Llamada al constructor de la clase base
+        super().__init__(nombre, salario_base)
+        self.ventas = ventas_realizadas
+
+    # 3. POLIMORFISMO (Sobrescritura de método)
+    # El mismo método 'calcular_pago' se comporta diferente aquí
+    def calcular_pago(self):
+        comision = self.ventas * 0.10  # 10% de comisión
+        return self.obtener_salario() + comision
+
+
+# --- PRUEBA DEL PROGRAMA (Instancias) ---
+
+if __name__ == "__main__":
+    print("--- Sistema de Nómina ---")
+
+    # Crear una instancia de la clase base
+    emp1 = Empleado("Ana García", 1000)
+    emp1.mostrar_informacion()
+    print(f"Pago total de Ana: ${emp1.calcular_pago()}")
+
+    print("-" * 30)
+
+    # Crear una instancia de la clase derivada
+    emp2 = EmpleadoPorComision("Luis Torres", 1000, 5000)
+    emp2.mostrar_informacion()
+    # Aquí se nota el polimorfismo: el cálculo es distinto para Luis
+    print(f"Pago total de Luis (con comisión): ${emp2.calcular_pago()}")
