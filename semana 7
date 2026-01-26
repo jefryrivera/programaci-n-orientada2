@@ -1,0 +1,48 @@
+class ArchivoSeguro:
+    """
+    Clase que demuestra el uso de constructores y destructores
+    simulando la apertura y cierre de un recurso (un archivo).
+    """
+
+    def __init__(self, nombre_archivo):
+        """
+        CONSTRUCTOR: Se activa al crear una nueva instancia de la clase.
+        Se utiliza para inicializar los atributos del objeto.
+        """
+        self.nombre = nombre_archivo
+        self.abierto = True
+        print(f"--- [Constructor]: El recurso '{self.nombre}' ha sido inicializado y abierto.")
+
+    def escribir_datos(self, datos):
+        """Método simple para interactuar con el objeto."""
+        if self.abierto:
+            print(f"Escribiendo en {self.nombre}: {datos}")
+        else:
+            print("Error: El archivo está cerrado.")
+
+    def __del__(self):
+        """
+        DESTRUCTOR: Se activa automáticamente cuando el objeto es destruido
+        o el programa finaliza. Ideal para tareas de limpieza.
+        """
+        self.abierto = False
+        print(f"--- [Destructor]: Cerrando conexión con '{self.nombre}'. Liberando recursos...")
+
+
+# --- Demostración del funcionamiento ---
+
+def ejecutar_demo():
+    print("Iniciando proceso...")
+    
+    # Creamos un objeto de la clase (Activa el __init__)
+    mi_archivo = ArchivoSeguro("Reporte_Ventas.txt")
+    
+    # Usamos el objeto
+    mi_archivo.escribir_datos("Venta #001 - $150.00")
+    
+    print("El bloque de código está por terminar.")
+    # Al salir de la función, 'mi_archivo' deja de existir y se activa el destructor.
+
+if __name__ == "__main__":
+    ejecutar_demo()
+    print("Programa finalizado correctamente.")
