@@ -1,0 +1,53 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class MiAplicacionGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Gestor de Datos - Tarea GUI")
+        self.root.geometry("400x400")
+
+        # --- Componentes de la Interfaz ---
+        
+        # Etiqueta (Label)
+        self.label_instruccion = tk.Label(root, text="Ingrese un dato:", font=("Arial", 12))
+        self.label_instruccion.pack(pady=10)
+
+        # Campo de texto (Entry)
+        self.entrada_dato = tk.Entry(root, width=30)
+        self.entrada_dato.pack(pady=5)
+
+        # Botón "Agregar"
+        self.boton_agregar = tk.Button(root, text="Agregar", command=self.agregar_dato, bg="#4CAF50", fg="white")
+        self.boton_agregar.pack(pady=5)
+
+        # Lista para mostrar datos (Listbox)
+        self.lista_datos = tk.Listbox(root, width=40, height=10)
+        self.lista_datos.pack(pady=10)
+
+        # Botón "Limpiar"
+        self.boton_limpiar = tk.Button(root, text="Limpiar Lista", command=self.limpiar_lista, bg="#f44336", fg="white")
+        self.boton_limpiar.pack(pady=5)
+
+    # --- Funcionalidades (Eventos) ---
+
+    def agregar_dato(self):
+        """Toma el texto del Entry y lo añade al Listbox."""
+        dato = self.entrada_dato.get()
+        if dato:
+            self.lista_datos.insert(tk.END, dato)
+            self.entrada_dato.delete(0, tk.END)  # Limpia el campo de texto tras agregar
+        else:
+            messagebox.showwarning("Advertencia", "Por favor, escribe algo primero.")
+
+    def limpiar_lista(self):
+        """Borra todos los elementos de la lista."""
+        confirmacion = messagebox.askyesno("Confirmar", "¿Estás seguro de que deseas vaciar la lista?")
+        if confirmacion:
+            self.lista_datos.delete(0, tk.END)
+
+# Ejecución de la aplicación
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = MiAplicacionGUI(root)
+    root.mainloop()
