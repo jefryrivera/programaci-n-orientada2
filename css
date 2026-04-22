@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+/* Parte Superior Celeste */
+.header-celeste {
+    background-color: #87CEEB; /* Celeste */
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.header-celeste h1 {
+    margin: 0;
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+/* Menú Horizontal */
+.menu-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.opcion {
+    text-align: center;
+    cursor: pointer;
+}
+
+.opcion h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.circulo-icono {
+    width: 60px;
+    height: 60px;
+    background-color: #87CEEB;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 24px;
+    color: white;
+}
+
+/* Secciones de contenido */
+.seccion-oculta {
+    display: none;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #87CEEB;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.link-google {
+    color: #007bff;
+    text-decoration: underline;
+}
